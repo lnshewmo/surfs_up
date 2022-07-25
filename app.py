@@ -12,7 +12,8 @@ from flask import Flask, jsonify
 # setup database
 
 # allows access to SQLite db file
-engine = create_engine("sqlite:///hawaii.sqlite")
+engine = create_engine("sqlite:///hawaii.sqlite", 
+                       connect_args={'check_same_thread': False})
 
 # reflect db 
 Base = automap_base()
@@ -39,8 +40,9 @@ def welcome():
     /api/v1.0/precipitation<br/>
     /api/v1.0/stations<br/>
     /api/v1.0/tobs<br/>
-    /api/v1.0/temp/start/end<br/>
-    /api/v1.0/temp/june
+    /api/v1.0/temp/min/avg/max/start/end&emsp;(input dates as: yyyy-mm-dd)<br/>
+    /api/v1.0/temp/june<br/>
+    /api/v1.0/temp/dec
     ''')
 
 # define route for precip data
@@ -84,8 +86,8 @@ def temp_monthly():
     return jsonify(temps=temps)
 
 # create tour for stats
-@app.route("/api/v1.0/temp/<start>")
-@app.route("/api/v1.0/temp/<start>/<end>")
+@app.route("/api/v1.0/temp/min/avg/max/<start>")
+@app.route("/api/v1.0/temp/min/avg/max/<start>/<end>")
 
 # query to select min, max, ave temp
 def stats(start=None, end=None):
@@ -106,10 +108,21 @@ def stats(start=None, end=None):
 @app.route("/api/v1.0/temp/june")
 
 def temp_june():
-    results = session.query(Measurement.tobs).\
-    filter(Measurement.station == 'USC00519281').\
-    filter(Measurement.date >= "2012-06-01").\
-    filter(Measurement.date <= "2012-06-30").all()
+    m = "06"
+    results = session.query(Measurement.date, Measurement.tobs).\
+        filter(func.strftime("%m", Measurement.date) == m).all()
     temps = list(np.ravel(results))
     return jsonify(temps=temps)
+
+@app.route("/api/v1.0/temp/dec")
+
+def temp_dec():
+    m = "12"
+    results = session.query(Measurement.date, Measurement.tobs).\
+        filter(func.strftime("%m", Measurement.date) == m).all()
+    temps = list(np.ravel(results))
+    return jsonify(temps=temps)
+
+print("complete")
+    
 
