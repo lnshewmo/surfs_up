@@ -6,7 +6,7 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine, inspect, MetaData, Table, func
 from flask import Flask, jsonify
 
 # setup database
@@ -39,7 +39,8 @@ def welcome():
     /api/v1.0/precipitation<br/>
     /api/v1.0/stations<br/>
     /api/v1.0/tobs<br/>
-    /api/v1.0/temp/start/end
+    /api/v1.0/temp/start/end<br/>
+    /api/v1.0/temp/june
     ''')
 
 # define route for precip data
@@ -50,11 +51,11 @@ def welcome():
 # create dict with date as the key and precip as value
 # use jsonify fn to convert dict to JSON file
 def precipitation():
-   prev_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
-   precipitation = session.query(Measurement.date, Measurement.prcp).\
-    filter(Measurement.date >= prev_year).all()
-   precip = {date: prcp for date, prcp in precipitation}
-   return jsonify(precip)
+    prev_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+    precipitation = session.query(Measurement.date, Measurement.prcp).\
+        filter(Measurement.date >= prev_year).all()
+    precip = {date: prcp for date, prcp in precipitation}
+    return jsonify(precip)
 
 # create route for stations
 @app.route("/api/v1.0/stations")
@@ -101,3 +102,14 @@ def stats(start=None, end=None):
         filter(Measurement.date <= end).all()
     temps = list(np.ravel(results))
     return jsonify(temps)
+
+@app.route("/api/v1.0/temp/june")
+
+def temp_june():
+    results = session.query(Measurement.tobs).\
+    filter(Measurement.station == 'USC00519281').\
+    filter(Measurement.date >= "2012-06-01").\
+    filter(Measurement.date <= "2012-06-30").all()
+    temps = list(np.ravel(results))
+    return jsonify(temps=temps)
+
