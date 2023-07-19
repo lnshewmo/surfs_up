@@ -14,8 +14,8 @@ Purpose:  The client is interested in temperature patterns in Oahu to help infor
 ### Temperature Statistics
 The following tables show the descriptive statistical analysis for 10 years of temperature measurements taken in June vs Dec.
 <p align="left">
-    <img width="20%" src="https://github.com/lnshewmo/surfs_up/blob/main/june_stats.png">
-    <img width="19%" src="https://github.com/lnshewmo/surfs_up/blob/main/dec_stats.png">
+    <img width="20%" src="https://github.com/lnshewmo/surfs_up/blob/main/resources/june_stats.png">
+    <img width="19%" src="https://github.com/lnshewmo/surfs_up/blob/main/resources/dec_stats.png">
 </p>   
 
 Key differences in weather between June and Dec:
@@ -26,7 +26,7 @@ Key differences in weather between June and Dec:
 
 This figure represents the same data as a histogram:
 
-<img src="https://github.com/lnshewmo/surfs_up/blob/main/temp_histogram.png" width="50%">
+<img src="https://github.com/lnshewmo/surfs_up/blob/main/resources/temp_histogram.png" width="50%">
 
 ## Summary
 
