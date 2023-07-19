@@ -4,7 +4,7 @@
 Purpose:  The client is interested in temperature patterns in Oahu to help inform the success of a proposed new ice cream and surf shop.  Available data from 9 weather stations located in Oahu from 2010-2017 were analyzed using SQLite and SQLalchemy.  The client is specifically interested in temperatures during the months of June and December.  A similar past venture in another location was unsuccessful due to unfavorable weather conditions across the winter.   
 
 ### Resources
-- SQLite: [Hawaii database](https://github.com/lnshewmo/surfs_up/blob/main/hawaii.sqlite)
+- SQLite: [Hawaii database](https://github.com/lnshewmo/surfs_up/blob/main/notebooks/hawaii.sqlite)
 - SQLalchemy
 - Python
 - Jupyter Notebook
